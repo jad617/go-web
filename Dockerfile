@@ -11,7 +11,7 @@ COPY . .
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-RUN go build /build/go-web .
+RUN go build -o /build/go-web .
 
 FROM alpine:latest
 
@@ -19,7 +19,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY --from=builder /build/* .
+COPY --from=builder /build/go-web .
 
 EXPOSE 8080
 
