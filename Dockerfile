@@ -1,7 +1,4 @@
-FROM golang:alpine AS builder
-# FROM golang:1.18-bullseye AS builder
-
-# RUN apt-get update && apt-get install -y ca-certificates
+FROM golang:1.18-bullseye AS builder
 
 RUN mkdir -p /build
 
@@ -9,17 +6,18 @@ WORKDIR /build
 
 COPY . .
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
-
 RUN go build -o /build/go-web .
 
-FROM alpine:latest
+# Main image
+FROM debian:11-slim
 
 RUN mkdir /app
 
 WORKDIR /app
 
 COPY --from=builder /build/go-web .
+
+ENV GIN_MODE=release
 
 EXPOSE 8080
 
