@@ -3,9 +3,10 @@
 
 .install-golangci-lint-script: &install-golangci-lint-script
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.47.2
-  - "golangci-lint run  --enable-all -D varnamelen -D interfacer -D maligned -D golint -D scopelint \
-    -D exhaustivestruct -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck \
-    -D structcheck -D tparallel -D wastedassign"
+  - golangci-lint run  --enable-all
+    -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct
+    -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck
+    -D structcheck -D tparallel -D wastedassign
 
 stages:
   - lint
