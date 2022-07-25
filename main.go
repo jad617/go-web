@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,13 +27,13 @@ func pathURL(c *gin.Context) {
 
 func main() {
 
-	// mux := http.NewServeMux()
-
-	// http.HandleFunc("/", httpHandler)
-
-	// log.Fatal(http.ListenAndServe(":9091", mux))
+	var err error
 	r := gin.Default()
-	r.SetTrustedProxies(nil)
+
+	err = r.SetTrustedProxies(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	r.LoadHTMLGlob("modern/templates/*.html")
 
@@ -53,5 +54,8 @@ func main() {
 	r.Static("/css", "modern/css")
 	r.Static("/js", "modern/js")
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	err = r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
