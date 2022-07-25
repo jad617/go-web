@@ -27,6 +27,7 @@ func pathURL(c *gin.Context) {
 
 func main() {
 	var err error
+
 	r := gin.Default()
 
 	err = r.SetTrustedProxies(nil)
