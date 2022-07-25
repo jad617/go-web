@@ -19,3 +19,8 @@ golangci-lint:
   image: golang:1.18-bullseye
   script:
     - *install-golangci-lint-script
+
+include:
+  - project: '$CI_PROJECT_NAME/pipeline-templates'
+    ref: main
+    file: '/docker/build-image-ECR.yml'
