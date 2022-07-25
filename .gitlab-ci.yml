@@ -1,5 +1,8 @@
 ---
 
+.install-golangci-lint-script: &install-golangci-lint-script
+  - echo "Execute this script second"
+
 stages:
   - lint
   - init
@@ -9,15 +12,13 @@ stages:
 Golangci-lint:
   stage: lint
   image: golang:1.18-bullseye
-  before_script: []
   script:
-    - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+    - *install-golangci-lint-script
     - golangci-lint run --disable structcheck && echo "Success"
 
 Golangci-lint_style:
   stage: lint
   image: golang:1.18-bullseye
-  before_script: []
   script:
-    - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.47.2
+    - *install-golangci-lint-script
     - golangci-lint run --presets style -D interfacer -D golint -D exhaustivestruct -D tparallel -D wastedassign ./...
