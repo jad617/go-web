@@ -1,7 +1,7 @@
 ---
 
 .install-golangci-lint-script: &install-golangci-lint-script
-  - echo "Execute this script second"
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.47.2
 
 stages:
   - lint
