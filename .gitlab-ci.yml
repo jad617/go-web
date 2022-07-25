@@ -21,6 +21,6 @@ golangci-lint:
     - *install-golangci-lint-script
 
 include:
-  - project: '$CI_PROJECT_NAME/pipeline-templates'
+  - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
     ref: main
     file: '/docker/build-image-ECR.yml'
