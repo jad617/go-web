@@ -12,4 +12,12 @@ Golangci-lint:
   before_script: []
   script:
     - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-    - golangci-lint run  --disable structcheck && echo "Success"
+    - golangci-lint run --disable structcheck && echo "Success"
+
+Golangci-lint_style:
+  stage: lint
+  image: golang:alpine
+  before_script: []
+  script:
+    - wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.47.2
+    - golangci-lint run --presets style -D interfacer -D golint -D exhaustivestruct -D tparallel -D wastedassign ./...
