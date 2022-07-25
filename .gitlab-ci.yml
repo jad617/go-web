@@ -13,6 +13,10 @@ stages:
   - init
   - build
 
+include:
+  - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
+    ref: main
+    file: '/docker/build-image-ECR.yml'
 
 golangci-lint:
   stage: lint
@@ -20,7 +24,7 @@ golangci-lint:
   script:
     - *install-golangci-lint-script
 
-include:
-  - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
-    ref: main
-    file: '/docker/build-image-ECR.yml'
+# Job comming from include build-image-ECR.yml
+# Overriding stage config
+build-image-ECR:
+  stage: build
