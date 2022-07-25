@@ -13,7 +13,7 @@ stages:
   - build
 
 
-Golangci-lint:
+golangci-lint:
   stage: lint
   image: golang:1.18-bullseye
   script:
