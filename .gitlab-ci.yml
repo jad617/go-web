@@ -1,13 +1,6 @@
 ---
 # yamllint disable rule:line-length
 
-.install-golangci-lint-script: &install-golangci-lint-script
-  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.47.2
-  - golangci-lint run  --enable-all
-    -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct
-    -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck
-    -D structcheck -D tparallel -D wastedassign
-
 stages:
   - lint
   - init
@@ -16,15 +9,17 @@ stages:
 include:
   - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
     ref: main
-    file: '/docker/build-image-ECR.yml'
-
-# golangci-lint:
-#   stage: lint
-#   image: golang:1.18-bullseye
-#   script:
-#     - *install-golangci-lint-script
+    file:
+      - '/docker/build-image-ECR.yml'
+      - 'go/lint.yml'
 
 # Job comming from include build-image-ECR.yml
 # Overriding stage config
+golangci-lint:
+  stage: lint
+
+ecr_repo_create:
+  stage: init
+
 build-image-ECR:
   stage: build
