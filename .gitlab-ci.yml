@@ -17,8 +17,8 @@ include:
 # Overriding stage config
 golangci-lint:
   stage: lint
-  variables:
-    GOLANGCI_VERSION: "v1.47.1"
+  # variables:
+  #   GOLANGCI_VERSION: "v1.47.1"
 
 ecr_repo_create:
   stage: init
