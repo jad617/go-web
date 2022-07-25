@@ -18,11 +18,11 @@ include:
     ref: main
     file: '/docker/build-image-ECR.yml'
 
-golangci-lint:
-  stage: lint
-  image: golang:1.18-bullseye
-  script:
-    - *install-golangci-lint-script
+# golangci-lint:
+#   stage: lint
+#   image: golang:1.18-bullseye
+#   script:
+#     - *install-golangci-lint-script
 
 # Job comming from include build-image-ECR.yml
 # Overriding stage config
