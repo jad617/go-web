@@ -10,8 +10,8 @@ include:
   - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
     ref: main
     file:
-      - '/docker/build-image-ECR.yml'
       - 'go/lint.yml'
+      - 'docker/build-image-ECR.yml'
 
 # Job comming from include build-image-ECR.yml
 # Overriding stage config
