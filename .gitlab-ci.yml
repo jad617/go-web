@@ -2,7 +2,7 @@
 # yamllint disable rule:line-length
 
 stages:
-  - lint
+  - code-analysis
   - init
   - build
 
@@ -11,17 +11,19 @@ include:
     ref: main
     file:
       - 'go/lint.yml'
-      - 'docker/build-image-ECR.yml'
+      - 'go/unitTest.yml'
+      - 'docker/ecr.yml'
 
 # Job comming from include build-image-ECR.yml
 # Overriding stage config
-golangci-lint:
-  stage: lint
-  # variables:
-  #   GOLANGCI_VERSION: "v1.47.1"
+go_lint_golangci:
+  stage: code-analysis
 
-ecr_repo_create:
+go_unitTest_runTests:
+  stage: code-analysis
+
+docker_ecr_repoCreate:
   stage: init
 
-build-image-ECR:
+docker_ecr_buildImage:
   stage: build
