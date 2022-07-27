@@ -12,3 +12,6 @@ dev:				## Dev Mode: will restart app on each code changes
 
 tidy:				## Install && cleans project dependencies in go.mod
 	@go mod tidy
+
+test:				## Run Unit tests
+	@go test -v ./...
