@@ -15,3 +15,6 @@ tidy:				## Install && cleans project dependencies in go.mod
 
 test:				## Run Unit tests
 	@go test -v ./...
+
+lint:				## Run lint command
+	@golangci-lint run  --enable-all -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck -D structcheck -D tparallel -D wastedassign
