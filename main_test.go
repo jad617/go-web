@@ -35,7 +35,7 @@ func TestPageHandler(t *testing.T) {
 		{testName: "portfolio-overview page Check", pagePath: "/portfolio-overview", request: "GET", expectedCode: 200},
 		{testName: "pricing page Check", pagePath: "/pricing", request: "GET", expectedCode: 200},
 		{testName: "/ page Check", pagePath: "/", request: "GET", expectedCode: 200},
-		{testName: "Inexisting /abc page Check", pagePath: "/abc", request: "GET", expectedCode: 500},
+		{testName: "Inexisting /abc page Check", pagePath: "/abc", request: "GET", expectedCode: 404},
 		{testName: "Empty page name Check", pagePath: "", request: "GET", expectedCode: 301},
 		{testName: "Inexisting abc page Check", pagePath: "abc", request: "GET", expectedCode: 404},
 	}
