@@ -6,25 +6,22 @@ import (
 	"strings"
 )
 
-func GetEnv(envVar string, defaultValue string) string {
-	env := ""
+func GetEnv(envKey string, defaultValue string) string {
+	var envValue string
 
-	upperEnvVar := strings.ToUpper(envVar)
-	lowerEnvVar := strings.ToLower(envVar)
-
-	upperEnv := os.Getenv(upperEnvVar)
-	lowerEnv := os.Getenv(lowerEnvVar)
+	upperEnv := os.Getenv(strings.ToUpper(envKey))
+	lowerEnv := os.Getenv(strings.ToLower(envKey))
 
 	if upperEnv != "" {
-		env = upperEnv
+		envValue = upperEnv
 	} else if lowerEnv != "" {
-		env = lowerEnv
+		envValue = lowerEnv
 	} else {
-		log.Println("Default value", defaultValue, "has been used")
+		log.Println(envKey, "is not defined. Default value", defaultValue, "has been used instead")
 		return defaultValue
 	}
 
-	log.Printf("Value for %v has been defined as: %v\n", envVar, env)
+	log.Printf("Value for %v has been defined as: %v\n", envKey, envValue)
 
-	return env
+	return envValue
 }
