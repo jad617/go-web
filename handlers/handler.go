@@ -14,6 +14,7 @@ var err error
 
 func indexHTMLPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{})
+
 	return
 }
 
@@ -24,14 +25,15 @@ func dynamicHTMLPage(templateFiles []string) gin.HandlerFunc {
 		pathHTML = path + ".html"
 
 		fileExists := containsFile(templateFiles, pathHTML)
-
-		if fileExists {
-			c.HTML(http.StatusOK, pathHTML, gin.H{})
-			return
-		} else {
+		if !fileExists {
 			c.HTML(http.StatusNotFound, "404.html", gin.H{})
+
 			return
 		}
+
+		c.HTML(http.StatusOK, pathHTML, gin.H{})
+
+		return
 	}
 }
 
@@ -41,7 +43,7 @@ func fetchTemplatefiles(templateDir string) ([]string, error) {
 
 	files, err := ioutil.ReadDir(templateDir)
 	if err != nil {
-		return listFiles, fmt.Errorf("Function fetchTemplatefiles failed with error: %v", err)
+		return listFiles, fmt.Errorf("function fetchTemplatefiles failed with error: %w", err)
 	}
 
 	for index, file := range files {
@@ -57,6 +59,7 @@ func containsFile(fetchedTemplateFiles []string, requestedPathHTML string) bool 
 			return true
 		}
 	}
+
 	return false
 }
 

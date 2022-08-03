@@ -12,12 +12,14 @@ func GetEnv(envKey string, defaultValue string) string {
 	upperEnv := os.Getenv(strings.ToUpper(envKey))
 	lowerEnv := os.Getenv(strings.ToLower(envKey))
 
-	if upperEnv != "" {
+	switch {
+	case upperEnv != "":
 		envValue = upperEnv
-	} else if lowerEnv != "" {
+	case lowerEnv != "":
 		envValue = lowerEnv
-	} else {
+	default:
 		log.Println(envKey, "is not defined. Default value", defaultValue, "has been used instead")
+
 		return defaultValue
 	}
 
