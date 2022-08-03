@@ -25,7 +25,6 @@ func dynamicHTMLPage(templateFiles []string) gin.HandlerFunc {
 		pathHTML = path + ".html"
 
 		fileExists := containsFile(templateFiles, pathHTML)
-
 		if !fileExists {
 			c.HTML(http.StatusNotFound, "404.html", gin.H{})
 
