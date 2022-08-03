@@ -10,6 +10,7 @@ var err error
 
 func main() {
 	configs.GetActiveProfile()
+
 	r := handlers.Handler()
 
 	err = r.Run(":8080")
