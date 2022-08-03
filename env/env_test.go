@@ -23,6 +23,8 @@ type testEnv struct {
 var testEnvValues = []testEnv{
 	{envKey: "env1", value: "value1", defaultValue: "notEmptyDefault1"},
 	{envKey: "env2", value: "value2", defaultValue: ""},
+	{envKey: "ENV3", value: "value3", defaultValue: "notEmptyDefault3"},
+	{envKey: "ENV4", value: "value4", defaultValue: ""},
 	{envKey: "", value: "", defaultValue: ""},
 }
 
