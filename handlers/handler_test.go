@@ -1,7 +1,7 @@
-package main
+package handlers
 
 import (
-	"go-web/handlers"
+	"go-web/configs"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,6 +15,8 @@ import (
 
 func TestPageHandler(t *testing.T) {
 	gin.SetMode(gin.ReleaseMode)
+
+	configs.GetActiveProfile()
 
 	t.Parallel()
 
@@ -47,7 +49,7 @@ func TestPageHandler(t *testing.T) {
 		t.Run(tc.testName, func(t *testing.T) {
 			t.Parallel()
 
-			r := handlers.Handler()
+			r := Handler()
 			w := httptest.NewRecorder()
 
 			req, err := http.NewRequest(tc.request, tc.pagePath, nil)
@@ -63,11 +65,13 @@ func TestPageHandler(t *testing.T) {
 }
 
 func TestIndexBody(t *testing.T) {
+	configs.GetActiveProfile()
+
 	gin.SetMode(gin.ReleaseMode)
 
 	t.Parallel()
 
-	r := handlers.Handler()
+	r := Handler()
 	w := httptest.NewRecorder()
 
 	req, err := http.NewRequest("GET", "/index", nil)

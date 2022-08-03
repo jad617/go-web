@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"fmt"
-	"go-web/config"
+	"go-web/configs"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -37,13 +37,13 @@ func dynamicHTMLPage(templateFiles []string) gin.HandlerFunc {
 	}
 }
 
-func fetchTemplatefiles(templateDir string) ([]string, error) {
+func fetchTemplateFiles(templateDir string) ([]string, error) {
 	const sliceLenght int = 32
 	listFiles := make([]string, sliceLenght)
 
 	files, err := ioutil.ReadDir(templateDir)
 	if err != nil {
-		return listFiles, fmt.Errorf("function fetchTemplatefiles failed with error: %w", err)
+		return listFiles, fmt.Errorf("function fetchTemplateFiles failed with error: %w", err)
 	}
 
 	for index, file := range files {
@@ -64,7 +64,7 @@ func containsFile(fetchedTemplateFiles []string, requestedPathHTML string) bool 
 }
 
 func Handler() *gin.Engine {
-	conf := config.FetchVars()
+	conf := configs.FetchVars()
 
 	r := gin.Default()
 
@@ -73,7 +73,7 @@ func Handler() *gin.Engine {
 		log.Fatal(err)
 	}
 
-	templateFiles, err := fetchTemplatefiles(conf.TemplateDir)
+	templateFiles, err := fetchTemplateFiles(conf.TemplateDir)
 	if err != nil {
 		log.Fatalf("Function Handler failed with error: %v", err)
 	}
