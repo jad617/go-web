@@ -1,6 +1,7 @@
-package main
+package handlers_test
 
 import (
+	"go-web/configs"
 	"go-web/handlers"
 	"io/ioutil"
 	"log"
@@ -12,6 +13,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	configs.GetActiveProfile()
+	m.Run()
+}
 
 func TestPageHandler(t *testing.T) {
 	gin.SetMode(gin.ReleaseMode)
