@@ -14,10 +14,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestMain(m *testing.M) {
+	configs.GetActiveProfile()
+	m.Run()
+}
+
 func TestPageHandler(t *testing.T) {
 	gin.SetMode(gin.ReleaseMode)
-
-	configs.GetActiveProfile()
 
 	t.Parallel()
 
@@ -66,8 +69,6 @@ func TestPageHandler(t *testing.T) {
 }
 
 func TestIndexBody(t *testing.T) {
-	configs.GetActiveProfile()
-
 	gin.SetMode(gin.ReleaseMode)
 
 	t.Parallel()
