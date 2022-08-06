@@ -20,12 +20,12 @@ const (
 
 func TestMain(m *testing.M) {
 	log.SetOutput(ioutil.Discard)
+	gin.SetMode(gin.ReleaseMode)
 	m.Run()
 }
 
 func TestPageHandler(t *testing.T) {
 	t.Setenv(templateDirKey, templateDirValue)
-	gin.SetMode(gin.ReleaseMode)
 
 	type testPage struct {
 		testName     string
@@ -71,7 +71,6 @@ func TestPageHandler(t *testing.T) {
 
 func TestIndexBody(t *testing.T) {
 	t.Setenv(templateDirKey, templateDirValue)
-	gin.SetMode(gin.ReleaseMode)
 
 	r := handlers.Handler()
 	w := httptest.NewRecorder()

@@ -29,18 +29,18 @@ var errTest = errors.New("")
 
 func TestGetEnv(t *testing.T) {
 	testEnvValues := []testEnv{
-		{testName: "1. Testing if envValue takes precedence over defaultValue", envKey: "env1", envValue: "value1", defaultValue: "notEmptyDefault1", expectedValue: "value1", expectedError: nil},
-		{testName: "2. Testing when defaultValue is not defined but envValue is", envKey: "env2", envValue: "value2", defaultValue: "", expectedValue: "value2", expectedError: nil},
-		{testName: "3. Testing when defaultValue is defined but not envValue", envKey: "env3", envValue: "", defaultValue: "notEmptyDefault3", expectedValue: "notEmptyDefault3", expectedError: nil},
-		{testName: "4. Testing same as Test 1 but with upper case envKey", envKey: "ENV4", envValue: "value4", defaultValue: "notEmptyDefault4", expectedValue: "value4", expectedError: nil},
-		{testName: "5. Testing same as Test 2 but with upper case envKey", envKey: "ENV5", envValue: "value5", defaultValue: "", expectedValue: "value5", expectedError: nil},
-		{testName: "6. Testing same as Test 3 but with upper case envKey", envKey: "ENV6", envValue: "", defaultValue: "notEmptyDefault6", expectedValue: "notEmptyDefault6", expectedError: nil},
-		{testName: "7. Testing that Error should be catched when all fields are empty strings", envKey: "", envValue: "", defaultValue: "", expectedError: errTest},
-		{testName: "8. Testing that Error should be catched when envKey is empty string even if envValue is defined", envKey: "", envValue: "value2", defaultValue: "", expectedError: errTest},
-		{testName: "9. Testing that Error should be catched when envKey is empty string even if envValue and defaultValue are defined", envKey: "", envValue: "value3", defaultValue: "notEmptyDefault3", expectedError: errTest},
-		{testName: "10. Testing that Error should be catched when envKey is empty string even if defaultValue is defined ", envKey: "", envValue: "", defaultValue: "notEmptyDefault4", expectedError: errTest},
-		{testName: "11. Testing that Error envKey defined when all other fields are empty", envKey: "env11", envValue: "", defaultValue: "", expectedError: errTest},
-		{testName: "12. Testing that Error upper envKey defined when all other fields are empty", envKey: "ENV12", envValue: "", defaultValue: "", expectedError: errTest},
+		{testName: "1 envValue takes precedence", envKey: "env1", envValue: "value1", defaultValue: "notEmptyDefault1", expectedValue: "value1", expectedError: nil},
+		{testName: "1.1 envKey capitalized (subtest)", envKey: "ENV4", envValue: "value4", defaultValue: "notEmptyDefault4", expectedValue: "value4", expectedError: nil},
+		{testName: "2 only envValue is defined", envKey: "env2", envValue: "value2", defaultValue: "", expectedValue: "value2", expectedError: nil},
+		{testName: "2.1 envKey capitialized (subtest)", envKey: "ENV5", envValue: "value5", defaultValue: "", expectedValue: "value5", expectedError: nil},
+		{testName: "3 only defaultValue is defined", envKey: "env3", envValue: "", defaultValue: "notEmptyDefault3", expectedValue: "notEmptyDefault3", expectedError: nil},
+		{testName: "3.1 envKey capitialized (subtest)", envKey: "ENV6", envValue: "", defaultValue: "notEmptyDefault6", expectedValue: "notEmptyDefault6", expectedError: nil},
+		{testName: "4 is Error when only envKey defined", envKey: "env11", envValue: "", defaultValue: "", expectedError: errTest},
+		{testName: "4.1 is Error envKey capitalized (subtest)", envKey: "ENV12", envValue: "", defaultValue: "", expectedError: errTest},
+		{testName: "5 is Error when all fields are empty", envKey: "", envValue: "", defaultValue: "", expectedError: errTest},
+		{testName: "6 is Error when only envValue is defined", envKey: "", envValue: "value2", defaultValue: "", expectedError: errTest},
+		{testName: "7 is Error when only envValue & defaultValue are defined", envKey: "", envValue: "value3", defaultValue: "notEmptyDefault3", expectedError: errTest},
+		{testName: "8 is Error when only defaultValue is defined", envKey: "", envValue: "", defaultValue: "notEmptyDefault4", expectedError: errTest},
 	}
 
 	for _, envTest := range testEnvValues {
