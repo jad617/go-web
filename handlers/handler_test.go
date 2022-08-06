@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"go-web/configs"
 	"go-web/handlers"
 	"io/ioutil"
 	"log"
@@ -14,15 +13,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	templateDirKey   string = "TEMPLATE_DIR"
+	templateDirValue string = "../modern/templates/"
+)
+
 func TestMain(m *testing.M) {
-	configs.GetActiveProfile()
+	log.SetOutput(ioutil.Discard)
 	m.Run()
 }
 
 func TestPageHandler(t *testing.T) {
+	t.Setenv(templateDirKey, templateDirValue)
 	gin.SetMode(gin.ReleaseMode)
-
-	t.Parallel()
 
 	type testPage struct {
 		testName     string
@@ -51,8 +54,6 @@ func TestPageHandler(t *testing.T) {
 		tc := tc
 
 		t.Run(tc.testName, func(t *testing.T) {
-			t.Parallel()
-
 			r := handlers.Handler()
 			w := httptest.NewRecorder()
 
@@ -69,9 +70,8 @@ func TestPageHandler(t *testing.T) {
 }
 
 func TestIndexBody(t *testing.T) {
+	t.Setenv(templateDirKey, templateDirValue)
 	gin.SetMode(gin.ReleaseMode)
-
-	t.Parallel()
 
 	r := handlers.Handler()
 	w := httptest.NewRecorder()
