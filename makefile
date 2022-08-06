@@ -17,4 +17,7 @@ test:				## Run Unit tests
 	@go test -v ./...
 
 lint:				## Run lint command
-	@golangci-lint run  --enable-all -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck -D structcheck -D tparallel -D wastedassign -D gci -D gosimple -D usestdlibvars -D lll -D paralleltest
+	@golangci-lint run  --enable-all -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck -D structcheck -D tparallel -D wastedassign -D gci -D gosimple -D usestdlibvars -D lll -D paralleltest -D ifshort
+
+lint-fix:				## Run lint command with --fix
+	@golangci-lint run  --enable-all -D varnamelen -D interfacer -D maligned -D golint -D scopelint -D exhaustivestruct -D bodyclose -D contextcheck -D nilerr -D noctx -D rowserrcheck -D sqlclosecheck -D structcheck -D tparallel -D wastedassign -D gci -D gosimple -D usestdlibvars -D lll -D paralleltest -D ifshort --fix
