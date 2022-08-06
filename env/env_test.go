@@ -45,30 +45,39 @@ func TestGetEnv(t *testing.T) {
 
 	for _, envTest := range testEnvValues {
 		t.Run(envTest.testName, func(t *testing.T) {
+			var (
+				errIsNil           bool // Default value is false
+				expectedErrorIsNil bool // Default value is false
+			)
+
+			// Set the ENV var if envKey is defined
 			if envTest.envKey != "" {
 				t.Setenv(envTest.envKey, envTest.envValue)
 			}
 
+			// Fetch envValue will be returned from the function if defined
+			// If not, defaultValue will be instead
 			got, err := env.GetEnv(envTest.envKey, envTest.defaultValue)
 			want := envTest.expectedValue
 
-			var errIsNil bool           // Default value is false
-			var expectedErrorIsNil bool // Default value is false
+			if got != want {
+				t.Errorf("got %v, wanted %v", got, want)
+			}
 
+			// Define err into "true" value if nil
 			if err == nil {
 				errIsNil = true
 			}
 
+			// Define envTest.expectedError into "true" value if nil
 			if envTest.expectedError == nil {
 				expectedErrorIsNil = true
 			}
 
-			if !assert.Equal(t, errIsNil, expectedErrorIsNil) {
+			// Both bool vars should have the same value
+			// If not, it will FAIL
+			if !assert.Equal(t, expectedErrorIsNil, errIsNil) {
 				t.Errorf("Error not catched, error msg is: %v", err)
-			}
-
-			if got != want {
-				t.Errorf("got %v, wanted %v", got, want)
 			}
 		})
 	}
