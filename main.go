@@ -9,7 +9,10 @@ import (
 var err error
 
 func main() {
-	configs.GetActiveProfile()
+	err = configs.GetActiveProfile()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	r := handlers.Handler()
 

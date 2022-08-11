@@ -1,37 +1,55 @@
 package configs
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"path"
 	"runtime"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
 
-func GetActiveProfile() {
+var (
+	err              error
+	errVoidEnvValue  = fmt.Errorf("function GetActiveProfile() failed with error: environment variable GO_ENV is empty or set to an unrecognized value")
+	errRuntimeCaller = fmt.Errorf("function GetActiveProfile() failed while calling function runtime.Caller(), error: failed to get the current execution filename")
+	errOsChdir       = fmt.Errorf("function GetActiveProfile() failed while calling function os.Chdir(), with error: %w", err)
+)
+
+func GetActiveProfile() error {
 	_, goFileExecuted, _, ok := runtime.Caller(0)
 	if !ok {
-		log.Println("function runtime.Caller() failed to get the current execution filename")
+		return errRuntimeCaller
 	}
 
 	projectRootDir := path.Join(path.Dir(goFileExecuted), "..")
 
 	err := os.Chdir(projectRootDir)
 	if err != nil {
-		panic(err)
+		return errOsChdir
 	}
 
-	switch os.Getenv("GO_ENV") {
+	activeProfile := strings.ToLower(os.Getenv("GO_ENV"))
+
+	switch activeProfile {
 	case "local":
-		err := godotenv.Load(projectRootDir + "/.env-local")
+		err := godotenv.Overload(projectRootDir + "/.env-local")
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("function GetActiveProfile() failed while calling other function, with error: %w", err)
 		}
+
+		return nil
+
 	case "pipeline":
-		err := godotenv.Load(projectRootDir + "/.env-pipeline")
+		err := godotenv.Overload(projectRootDir + "/.env-pipeline")
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("function GetActiveProfile() failed while calling other function, with error: %w", err)
 		}
+
+		return nil
+
+	default:
+		return errVoidEnvValue
 	}
 }
