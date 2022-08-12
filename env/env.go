@@ -7,12 +7,18 @@ import (
 	"strings"
 )
 
-var (
-	errEmptyEnvKey = fmt.Errorf("function got envKey: \"\" --> Was expecting a non-empty string")
-	errEmptyValues = fmt.Errorf("got envValue: \"\" and defaultValue: \"\". Was expecting at least envKey to have a non-empty string value or defaultValue to be a valid non-empty string parameter")
+const (
+	logPrefix = "\nLOG --->"
+	logSufix  = "<---"
 )
 
-func GetEnv(envKey string, defaultValue string) (string, error) {
+var (
+	errEmptyEnvKey        = fmt.Errorf("\nfunction got envKey: \"\" --> Was expecting a non-empty string")
+	errEmptyValuesDefault = fmt.Errorf("\ngot envValue: \"\" and defaultValue: \"\". Was expecting at least envValue or defaultValue to be a valid non-empty string parameter")
+	errEmptyValues        = fmt.Errorf("\ngot envValue: \"\". Was expecting at least envValue to have a non-empty string parameter")
+)
+
+func GetDefault(envKey string, defaultValue string) (string, error) {
 	var envValue string
 
 	if envKey == "" {
@@ -28,9 +34,33 @@ func GetEnv(envKey string, defaultValue string) (string, error) {
 	case lowerEnv != "":
 		envValue = lowerEnv
 	case defaultValue != "":
-		log.Println(envKey, "is not defined. Default value", defaultValue, "has been used instead")
+		log.Println(logPrefix, envKey, "is not defined. Default value", defaultValue, "has been used instead", logSufix)
 
 		return defaultValue, nil
+	default:
+		return "", errEmptyValuesDefault
+	}
+
+	log.Printf("%v Value for %v has been defined as: %v %v", logPrefix, envKey, envValue, logSufix)
+
+	return envValue, nil
+}
+
+func Get(envKey string) (string, error) {
+	var envValue string
+
+	if envKey == "" {
+		return "", errEmptyEnvKey
+	}
+
+	upperEnv := os.Getenv(strings.ToUpper(envKey))
+	lowerEnv := os.Getenv(strings.ToLower(envKey))
+
+	switch {
+	case upperEnv != "":
+		envValue = upperEnv
+	case lowerEnv != "":
+		envValue = lowerEnv
 	default:
 		return "", errEmptyValues
 	}
