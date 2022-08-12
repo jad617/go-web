@@ -3,6 +3,7 @@
 
 stages:
   - code-analysis
+  - code-gating
   - init
   - build
 
@@ -22,8 +23,20 @@ go_lint_golangci:
 go_unitTest_runTests:
   stage: code-analysis
 
+go_unitTest_codeCoverage:
+  stage: code-gating
+
+go_unitTest_gating:
+  stage: code-gating
+
 docker_ecr_repoCreate:
   stage: init
+  only:
+    refs:
+      - main
 
 docker_ecr_buildImage:
   stage: build
+  only:
+    refs:
+      - main
