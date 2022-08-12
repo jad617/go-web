@@ -19,6 +19,6 @@ func returnString(envString string, envErr error) string {
 
 func FetchVars() *Config {
 	return &Config{
-		TemplateDir: returnString((env.GetEnv("TEMPLATE_DIR", "/var/www/html/"))),
+		TemplateDir: returnString((env.GetDefault("TEMPLATE_DIR", "/var/www/html/"))),
 	}
 }
