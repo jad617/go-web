@@ -28,6 +28,8 @@ go_unitTest_codeCoverage:
 
 go_unitTest_gating:
   stage: code-gating
+  variables:
+    ACCEPTABLE_COVERAGE: 80
 
 docker_ecr_repoCreate:
   stage: init
