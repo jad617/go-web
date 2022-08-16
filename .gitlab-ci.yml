@@ -20,26 +20,38 @@ include:
 # Overriding stage config
 go_lint_golangci:
   stage: code-analysis
+  only:
+    refs:
+      - main
 
 go_unitTest_runTests:
   stage: code-analysis
+  only:
+    refs:
+      - main
 
 go_unitTest_codeCoverage:
   stage: code-gating
+  only:
+    refs:
+      - main
 
 go_unitTest_gating:
   stage: code-gating
   variables:
     ACCEPTABLE_COVERAGE: 80
+  only:
+    refs:
+      - main
 
 docker_ecr_repoCreate:
   stage: init
-  only:
-    refs:
-      - main
+  # only:
+  #   refs:
+  #     - main
 
 docker_ecr_buildImage:
-  stage: build
-  only:
-    refs:
-      - main
+  stage: code-analysis
+  # only:
+  #   refs:
+  #     - main
