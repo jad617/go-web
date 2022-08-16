@@ -9,8 +9,7 @@ stages:
 
 include:
   - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
-    # ref: main
-    ref: feature/add-ECR-version
+    ref: main
     file:
       - 'go/lint.yml'
       - 'go/unitTest.yml'
@@ -20,38 +19,26 @@ include:
 # Overriding stage config
 go_lint_golangci:
   stage: code-analysis
-  only:
-    refs:
-      - main
 
 go_unitTest_runTests:
   stage: code-analysis
-  only:
-    refs:
-      - main
 
 go_unitTest_codeCoverage:
   stage: code-gating
-  only:
-    refs:
-      - main
 
 go_unitTest_gating:
   stage: code-gating
   variables:
     ACCEPTABLE_COVERAGE: 80
+
+docker_ecr_repoCreate:
+  stage: init
   only:
     refs:
       - main
 
-docker_ecr_repoCreate:
-  stage: init
-  # only:
-  #   refs:
-  #     - main
-
 docker_ecr_buildImage:
-  stage: code-analysis
-  # only:
-  #   refs:
-  #     - main
+  stage: build
+  only:
+    refs:
+      - main
