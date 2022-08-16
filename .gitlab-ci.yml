@@ -9,7 +9,8 @@ stages:
 
 include:
   - project: '$CI_PROJECT_ROOT_NAMESPACE/pipeline-templates'
-    ref: main
+    # ref: main
+    ref: feature/add-ECR-version
     file:
       - 'go/lint.yml'
       - 'go/unitTest.yml'
