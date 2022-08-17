@@ -21,44 +21,44 @@ include:
 go_lint_golangci:
   stage: code-analysis
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 
 go_unitTest_runTests:
   stage: code-analysis
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 go_unitTest_codeCoverage:
   stage: code-gating
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 go_unitTest_gating:
   stage: code-gating
   variables:
     ACCEPTABLE_COVERAGE: 80
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 
 docker_ecr_repoCreate:
   stage: init
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 git_actions_gating:
   stage: init
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 docker_ecr_buildImage:
   stage: build
   rules:
-    - if: '$CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" '  # only when merge from a PR to "main"
+    - if: '$CI_MERGE_REQUEST_APPROVED'  # only when merge from a PR
 
 
 git_actions_tag:
   stage: build
   rules:
-    - if: '$CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" '  # only when merge from a PR to "main"
+    - if: '$CI_MERGE_REQUEST_APPROVED'  # only when merge from a PR
