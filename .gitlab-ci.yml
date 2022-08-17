@@ -55,10 +55,10 @@ git_actions_gating:
 docker_ecr_buildImage:
   stage: build
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "master" '  # only when merge from a PR to "main"
+    - if: '$CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" '  # only when merge from a PR to "main"
 
 
 git_actions_tag:
   stage: build
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "master" '  # only when merge from a PR to "main"
+    - if: '$CI_MERGE_REQUEST_APPROVED && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" '  # only when merge from a PR to "main"
