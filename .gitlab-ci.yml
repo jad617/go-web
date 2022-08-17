@@ -14,31 +14,51 @@ include:
       - 'go/lint.yml'
       - 'go/unitTest.yml'
       - 'docker/ecr.yml'
+      - 'git/actions.yml'
 
 # Job comming from include build-image-ECR.yml
 # Overriding stage config
 go_lint_golangci:
   stage: code-analysis
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+
 
 go_unitTest_runTests:
   stage: code-analysis
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 go_unitTest_codeCoverage:
   stage: code-gating
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 go_unitTest_gating:
   stage: code-gating
   variables:
     ACCEPTABLE_COVERAGE: 80
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+
 
 docker_ecr_repoCreate:
   stage: init
-  only:
-    refs:
-      - main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
+
+git_actions_gating:
+  stage: init
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "merge_request_event"'  # only on PR's or push
 
 docker_ecr_buildImage:
   stage: build
-  only:
-    refs:
-      - main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "master" '  # only when merge from a PR to "main"
+
+
+git_actions_tag:
+  stage: build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "master" '  # only when merge from a PR to "main"
