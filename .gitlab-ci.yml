@@ -55,7 +55,7 @@ git_actions_gating:
 docker_ecr_buildImage:
   stage: build
   rules:
-    - if: '$CI_MERGE_REQUEST_APPROVED'  # only when merge from a PR
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "push"'  # only when merge from a PR2
 
 
 git_actions_tag:
