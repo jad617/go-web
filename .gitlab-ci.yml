@@ -27,7 +27,7 @@ go_lint_golangci:
 go_unitTest_runTests:
   stage: code-analysis
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMITREF_NAME == $CI_DEFAULT_BRANCH'  # only on PR's or merge to main
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'  # only on PR's or merge to main
 
 go_unitTest_codeCoverage:
   stage: code-gating
