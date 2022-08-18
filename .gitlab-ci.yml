@@ -61,4 +61,4 @@ docker_ecr_buildImage:
 git_actions_tag:
   stage: build
   rules:
-    - if: '$CI_MERGE_REQUEST_APPROVED'  # only when merge from a PR
+    - if: '$CI_MERGE_REQUEST_APPROVED'  # only when merge from a PR2
